@@ -1,0 +1,51 @@
+using System.ComponentModel.Design;
+using System.Xml.XPath;
+
+Random random = new Random();
+
+Console.WriteLine("Would you like to play? (Y/N)");
+if (ShouldPlay())
+{
+    PlayGame();
+}
+
+void PlayGame()
+{
+    var play = true;
+
+    while (play)
+    {
+        int roll = random.Next(1, 6);
+        int target = random.Next(1, 6);
+
+        Console.WriteLine($"Roll a number greater than {target} to win!");
+        Console.WriteLine($"You rolled a {roll}");
+        Console.WriteLine(WinOrLose(target, roll));
+        Console.WriteLine("\nPlay again? (Y/N)");
+
+        play = ShouldPlay();
+    }
+}
+
+bool ShouldPlay()
+{
+    string choix = "";
+    do
+    {
+        string? result = Console.ReadLine();
+        if (result != null)
+        {
+            choix = result.ToLower().Trim();
+        }
+    } while (choix != "y" && choix != "n");
+
+    return choix == "y";
+}
+
+string WinOrLose(int target, int roll)
+{
+    return roll >= target ? "You win!" : "You lose!";
+}
+
+
+//Liens énoncé: https://learn.microsoft.com/fr-fr/training/modules/create-c-sharp-methods-return-values/7-exercise-challenge-dice-game
